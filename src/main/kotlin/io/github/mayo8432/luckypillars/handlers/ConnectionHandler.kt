@@ -13,18 +13,18 @@ import java.util.UUID
 class ConnectionHandler: Listener {
 
     private val pillarCoordinatesList: List<Location> = listOf(
-        Location(Bukkit.getWorld("world"),23.5 ,23.5, 83.5),
-        Location(Bukkit.getWorld("world"),23.5 ,23.5, 76.5),
-        Location(Bukkit.getWorld("world"),18.5 ,23.5, 67.5),
-        Location(Bukkit.getWorld("world"),10.5 ,23.5, 63.5),
-        Location(Bukkit.getWorld("world"),1.5 ,23.5, 63.5),
-        Location(Bukkit.getWorld("world"),-6.5 ,23.5, 67.5),
-        Location(Bukkit.getWorld("world"),-11.5 ,23.5, 76.5),
-        Location(Bukkit.getWorld("world"),-11.5 ,23.5, 83.5),
-        Location(Bukkit.getWorld("world"),-6.5 ,23.5, 92.5),
-        Location(Bukkit.getWorld("world"),2.5 ,23.5, 97.5),
-        Location(Bukkit.getWorld("world"),9.5 ,23.5, 97.5),
-        Location(Bukkit.getWorld("world"),18.5 ,23.5, 92.5)
+        Location(Bukkit.getWorld("world"),23.5 ,23.0, 83.5, 90f, 0f),
+        Location(Bukkit.getWorld("world"),23.5 ,23.0, 76.5, 90f, 0f),
+        Location(Bukkit.getWorld("world"),18.5 ,23.0, 67.5, 45f, 0f),
+        Location(Bukkit.getWorld("world"),10.5 ,23.0, 63.5, 0f, 0f),
+        Location(Bukkit.getWorld("world"),1.5 ,23.0, 63.5, 0f, 0f),
+        Location(Bukkit.getWorld("world"),-6.5 ,23.0, 67.5, -45f, 0f),
+        Location(Bukkit.getWorld("world"),-11.5 ,23.0, 76.5, -90f, 0f),
+        Location(Bukkit.getWorld("world"),-11.5 ,23.0, 83.5, -90f, 0f),
+        Location(Bukkit.getWorld("world"),-6.5 ,23.0, 92.5, -135f, 0f),
+        Location(Bukkit.getWorld("world"),2.5 ,23.0, 97.5, -180f, 0f),
+        Location(Bukkit.getWorld("world"),9.5 ,23.0, 97.5, -180f, 0f),
+        Location(Bukkit.getWorld("world"),18.5 ,23.0, 92.5, 135f, 0f)
     )
 
     private val occupiedSlots = mutableMapOf<Int, UUID>()
@@ -41,18 +41,12 @@ class ConnectionHandler: Listener {
         player.gameMode = GameMode.SURVIVAL
         player.saturation = 14f
 
-        // Reconnect Feature
-        val existingSlot = occupiedSlots.entries.find { it.value == player.uniqueId }?.key
-        if (existingSlot != null) {
-            player.teleport(pillarCoordinatesList[existingSlot])
-            return
-        }
 
         // Searching free Slot
         val freeSlot = (0 until pillarCoordinatesList.size).firstOrNull { it !in occupiedSlots.keys }
 
         if (freeSlot == null) {
-            player.sendMessage("No free slot avaiable")
+            player.sendMessage("No free slot available")
             return
         }
 
