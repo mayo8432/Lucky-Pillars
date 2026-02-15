@@ -41,14 +41,14 @@ class ConnectionHandler: Listener {
         player.gameMode = GameMode.SURVIVAL
         player.saturation = 14f
 
-        //Reconnect Feature
+        // Reconnect Feature
         val existingSlot = occupiedSlots.entries.find { it.value == player.uniqueId }?.key
         if (existingSlot != null) {
             player.teleport(pillarCoordinatesList[existingSlot])
             return
         }
 
-        //Searching free Slot
+        // Searching free Slot
         val freeSlot = (0 until pillarCoordinatesList.size).firstOrNull { it !in occupiedSlots.keys }
 
         if (freeSlot == null) {
