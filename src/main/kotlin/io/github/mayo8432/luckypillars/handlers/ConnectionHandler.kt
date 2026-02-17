@@ -1,6 +1,7 @@
 package io.github.mayo8432.luckypillars.handlers
 
 import io.github.mayo8432.luckypillars.Main
+import io.github.mayo8432.luckypillars.data.GameData
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
 import org.bukkit.Location
@@ -38,6 +39,11 @@ class ConnectionHandler: Listener {
 
         val player = event.player
 
+        if (GameData.gameIsRunning) {
+            GameData.toSpectator(player)
+            return
+        }
+
         player.gameMode = GameMode.SURVIVAL
         player.saturation = 14f
 
@@ -61,6 +67,13 @@ class ConnectionHandler: Listener {
         val slot = occupiedSlots.entries.find { it.value == uuid }?.key
         if (slot != null) {
             occupiedSlots.remove(slot)
+        }
+
+        if (GameData.gameIsRunning && GameData.playerCount == 1) {
+
+            Bukkit.getScheduler().runTaskLater(Main.instance, Runnable{
+              GameData.handleGameFinish()
+            }, 1L)
         }
     }
 }
