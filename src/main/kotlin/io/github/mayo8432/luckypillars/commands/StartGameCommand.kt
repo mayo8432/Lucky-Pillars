@@ -37,15 +37,25 @@ object StartGameCommand {
 
             var allowedMaterials = Material.entries.filter { it.isItem && it !in blockedMaterials }
 
-            GameData.gameIsRunning = true
+            if (GameData.giveTaskID == null) {
 
-            Bukkit.getScheduler().runTaskTimer(Main.instance, Runnable {
-                Bukkit.getOnlinePlayers().filter { it.gameMode == GameMode.SURVIVAL }.forEach {
-                    val randomItem = ItemStack(allowedMaterials.random())
-                    it.give(randomItem)
-                }
-            }, 0L, 10L * 20L)
+                GameData.gameIsRunning = true
 
+                val taskID = Bukkit.getScheduler().runTaskTimer(Main.instance, Runnable {
+                    Bukkit.getOnlinePlayers().filter { it.gameMode === GameMode.SURVIVAL }.forEach{
+                        val randomItem = ItemStack(allowedMaterials.random())
+                        it.give(randomItem)
+                    }
+                },0L, 10L *20L).taskId
+
+                GameData.giveTaskID = taskID
+
+                player.sendMessage("The game has been started!")
+
+            } else {
+
+                player.sendMessage("The game is running already")
+            }
         }
     }
 }

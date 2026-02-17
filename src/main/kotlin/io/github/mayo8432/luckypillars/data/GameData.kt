@@ -18,6 +18,7 @@ object GameData {
         }
 
     var gameIsRunning = false
+    var giveTaskID: Int? = null
 
     fun handleGameFinish() {
         Bukkit.getOnlinePlayers().first { it.gameMode == GameMode.SURVIVAL }.showTitle(

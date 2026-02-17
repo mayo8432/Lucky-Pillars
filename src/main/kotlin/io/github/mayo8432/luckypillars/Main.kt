@@ -2,10 +2,12 @@ package io.github.mayo8432.luckypillars
 
 import dev.jorel.commandapi.CommandAPI
 import dev.jorel.commandapi.CommandAPIPaperConfig
+import io.github.mayo8432.luckypillars.commands.EndGameCommand
 import io.github.mayo8432.luckypillars.commands.StartGameCommand
 import io.github.mayo8432.luckypillars.commands.Test
 import io.github.mayo8432.luckypillars.handlers.ConnectionHandler
 import io.github.mayo8432.luckypillars.handlers.DeathHandler
+import io.github.mayo8432.luckypillars.handlers.MovementHandler
 import org.bukkit.plugin.java.JavaPlugin
 
 class Main : JavaPlugin() {
@@ -30,7 +32,9 @@ class Main : JavaPlugin() {
 
         ConnectionHandler()
         DeathHandler()
+        MovementHandler()
         StartGameCommand
+        EndGameCommand
         Test
     }
 
